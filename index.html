@@ -1,5 +1,4 @@
 <html lang="en">
-
 <head>
 	<title>Agora.io - Live Stream</title>
 	<meta charset="utf-8">
@@ -11,15 +10,14 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
-	<!-- <script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-app.js"></script> -->
-	 <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
-	 
+	<!-- <script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-app.js"></script> --> 
+	<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>	 
 	<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-database.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-firestore.js"></script>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+		integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 </head>
-
 <body>
 	<div class="container-fluid p-0">
 		<div id="full-screen-video"></div>
@@ -30,29 +28,28 @@
 	<div id="watch-live-overlay">
 		<div id="overlay-container">
 			<div class="col-md text-center">
-				<button id="watch-live-btn" type="button" class="btn btn-block btn-primary btn-xlg" style="display: none;">
+				<button id="watch-live-btn" type="button" class="btn btn-block btn-primary btn-xlg"
+					style="display: none;">
 					<i id="watch-live-icon" class="fas fa-broadcast-tower"></i><span>Watch the Live Stream</span>
 				</button>
 			</div>
 		</div>
 		<div id="overlay-container">
-
-
 			<table class="table-dark table-reponsive" id="list_product" width="100%" cellspacing="0">
 				<thead>
-					<tr >
+					<tr>
 						<th style="text-align:center">S.No</th>
 						<th style="text-align:center">Email</th>
 						<th style="text-align:center">Channel Name</th>
-						<th style="text-align:center" >View Stream</th>
-						
+						<th style="text-align:center">View Stream</th>
+
 					</tr>
 				</thead>
 				<tbody id="list_product1">
 				</tbody>
 
 			</table>
-			
+
 		</div>
 	</div>
 	</div>
@@ -61,32 +58,30 @@
 <script src="js/firebase.js"></script>
 
 <script>
-	var i=0;
+	var i = 0;
 	var content = '';
 	var db = firebase.firestore();
 	var db1 = db.collection("users").get().then((querySnapshot) => {
 		querySnapshot.forEach((doc) => {
-			data = (doc.data() );
+			data = (doc.data());
 			console.log(data.email);
 			console.log(data.roomName);
-			if(data.roomName !== undefined && data.roomName !== '') {
-			// var data = doc.data();
-			
-					content += '<tr>';
-                    content += '<td style="text-align:center">' + i + '</td>';
-                    content += '<td style="text-align:center">' + data.email + '</td>';
-					content += '<td style="text-align:center">' + data.roomName + '</td>';
-					content += '<td style="text-align: center;">   <button value="'+data.roomName+'" type="button" class="btn  btn-primary  watch-live-btn_firebase"><i id="watch-live-icon'+i+'" class="fas fa-broadcast-tower"  ></i><span>Watch the Live Stream</span></button>  </td>';
-					content += '</tr>';
-					
-					i++;
+			if (data.roomName !== undefined && data.roomName !== '') {
+				// var data = doc.data();
+				content += '<tr>';
+				content += '<td style="text-align:center">' + i + '</td>';
+				content += '<td style="text-align:center">' + data.email + '</td>';
+				content += '<td style="text-align:center">' + data.roomName + '</td>';
+				content += '<td style="text-align: center;">   <button value="' + data.roomName + '" type="button" class="btn  btn-primary  watch-live-btn_firebase"><i id="watch-live-icon' + i + '" class="fas fa-broadcast-tower"  ></i><span>Watch the Live Stream</span></button>  </td>';
+				content += '</tr>';
+				i++;
 			}
 		});
 		$('#list_product1').append(content);
 	});
 	var channelName;
 
-	$(document).on('click', '.watch-live-btn_firebase', function() {
+	$(document).on('click', '.watch-live-btn_firebase', function () {
 		var roomName = $(this).val();
 		localStorage.setItem("vOneLocalStorage", roomName)
 		$('#watch-live-btn').click();
